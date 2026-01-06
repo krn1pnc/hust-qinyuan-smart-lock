@@ -10,6 +10,8 @@ Inspired by [vaaandark/smart-door](https://github.com/vaaandark/smart-door)．
 
 https://github.com/vaaandark/smart-door
 
+https://github.com/miguelbalboa/rfid/issues/269#issuecomment-922404208
+
 https://gist.github.com/igrr/54f7fbe0513ac14e1aea3fd7fbecfeab
 
 https://github.com/espressif/esp-idf
