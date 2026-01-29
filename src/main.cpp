@@ -2,6 +2,7 @@
 
 #include "hal/rtc_cntl_ll.h"
 #include "rom/rtc.h"
+#include "soc/io_mux_reg.h"
 
 #include <Arduino.h>
 #include <MFRC522.h>
@@ -14,6 +15,7 @@ FORCE_INLINE_ATTR uint32_t clk_ll_rtc_slow_load_cal(void) {
 
 FORCE_INLINE_ATTR void gpio_output_enable(uint8_t pin) {
     GPIO.enable_w1ts.enable_w1ts = 1u << pin;
+    PIN_FUNC_SELECT(IO_MUX_GPIO0_REG + (pin * 4), PIN_FUNC_GPIO);
 }
 
 FORCE_INLINE_ATTR uint32_t digital_read(uint8_t pin) {
@@ -145,14 +147,18 @@ bool is_authorized_card(const MFRC522::Uid &uid) {
 
 void setup() {
     SPI.begin(MFRC_SCK, MFRC_MISO, MFRC_MOSI, MFRC_CS);
+
+    pinMode(SERVO_POWER, OUTPUT);
     mg996r.attach(SERVO_PWM);
 
+    digitalWrite(SERVO_POWER, HIGH);
     if (mfrc522.PICC_ReadCardSerial()) {
         if (is_authorized_card(mfrc522.uid)) {
             mg996r.write(180), delay(3000);
             mg996r.write(0), delay(1500);
         }
     }
+    digitalWrite(SERVO_POWER, LOW);
 
     esp_sleep_enable_timer_wakeup(SLEEP_TIME);
     esp_set_deep_sleep_wake_stub(&wake_stub);

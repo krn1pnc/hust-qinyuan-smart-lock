@@ -8,10 +8,11 @@
 #define MFRC_SCK 2
 #define MFRC_MOSI 3
 #define MFRC_MISO 10
-#define MFRC_CS 8
-#define MFRC_RST 6
+#define MFRC_CS 6
+#define MFRC_RST 8
 
-#define SERVO_PWM 13
+#define SERVO_POWER 5
+#define SERVO_PWM 4
 
 #define CARD_NUM 0
 #define UID_SIZE 4
